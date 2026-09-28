@@ -2,6 +2,10 @@
 // Такође, видите metadata.typ
 
 #import "metadata.typ": *
+#import "funkcije.typ": checkbib, todos
+// Празна поља комисије остају празна до потврде ментора.
+#show "Др , ": ""
+#show ", PhD, ": ""
 #set page(paper: format_strane, margin: (y: 2.5cm, inside: 2cm, outside: 1.5cm))
 #include "naslovna.typ"
 #pagebreak()
@@ -29,6 +33,8 @@
 ): set figure.caption(position: top)
 #show figure.where(kind: raw): set figure(supplement: [Листинг])
 #set ref(supplement: none)
+#show figure.where(kind: table): set block(breakable: true)
+#show figure.caption: set text(size: 9pt)
 
 
 #import "@preview/hydra:0.6.2": hydra
@@ -66,10 +72,18 @@
 #counter(page).update(1)
 
 
-// TODO: Овде укључујете поглавља
-#include "poglavlja/1-uvod.typ"
-#include "poglavlja/2-stanje.typ"
-#include "poglavlja/7-zakljucak.typ"
+#include "poglavlja/01-uvod.typ"
+#include "poglavlja/02-analiza-domena.typ"
+#include "poglavlja/03-funkcionalni-zahtevi.typ"
+#include "poglavlja/04-tehnologije.typ"
+#include "poglavlja/05-arhitektura.typ"
+#include "poglavlja/06-model-podataka.typ"
+#include "poglavlja/07-implementacija.typ"
+#include "poglavlja/08-integracija.typ"
+#include "poglavlja/09-korisnicki-interfejs.typ"
+#include "poglavlja/10-bezbednost.typ"
+#include "poglavlja/11-diskusija.typ"
+#include "poglavlja/12-zakljucak.typ"
 
 
 
@@ -82,7 +96,7 @@
         #outline(title: none, target: figure.where(kind: image))
     ]
 
-    if query(figure.where(kind: image)).len() > 0  [
+    if query(figure.where(kind: raw)).len() > 0  [
         = Списак листинга
         <spisak-listinga>
         #outline(title: none, target: figure.where(kind: raw))
@@ -97,25 +111,20 @@
 
 
 
-#show figure: it => {
-    set text(size: 9pt)
-    set block(breakable: true)
-    set table(
-        columns: (1fr, 4fr),
-        align: left,
-        inset: 8pt,
-        stroke: 0pt)
-    it
-}
-
-// TODO: Додаци - искоментарисати ако се не користе
-#include "poglavlja/dodatak 1 - skracenice.typ"
-#include "poglavlja/dodatak 2 - pojmovi.typ"
+// Додаци користе словну нумерацију, одвојену од основних поглавља.
+#counter(heading).update(0)
+#set heading(numbering: "A.1")
+#include "poglavlja/dodatak-a-api.typ"
+#include "poglavlja/dodatak-b-statusi.typ"
+#include "poglavlja/dodatak-c-zahtevi.typ"
+#include "poglavlja/dodatak-d-tehnologije.typ"
+#set heading(numbering: none)
+#include "poglavlja/dodatak-1-skracenice.typ"
 
 #include "biografija.typ"
 
 #show "Available at:": "Доступно на "
-#bibliography(title: [Литература], "literatura.bib")
+#bibliography(title: [Литература], style: "ieee", "literatura.bib")
 #checkbib()
 
 // Потребне исправке и дораде. У тексту користити са

@@ -1,1 +1,13 @@
 /.auctex-auto/
+/typst.exe
+/typst
+/qa*/
+/provera/
+/tmp/
+/pre-*-backup/
+*.docx
+*.odt
+*.bak
+*.tmp
+~$*
+.DS_Store
