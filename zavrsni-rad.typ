@@ -36,11 +36,19 @@
 
 #import "@preview/hydra:0.6.2": hydra
 
+// Ћирилична нумерација прилога: А, Б, В, Г, Д; А.1, Б.2 ...
+#let prilog-numbering = (..n) => {
+    let slova = ("А", "Б", "В", "Г", "Д", "Ђ", "Е")
+    let p = n.pos()
+    slova.at(p.first() - 1) + p.slice(1).map(x => "." + str(x)).join()
+}
+
 #show heading.where(level: 1): (it) => {
     pagebreak(to: "odd", weak: true)
     set block(spacing: 8pt)
     if it.numbering != none {
-        let prefix = if it.numbering == "A.1" { "Додатак " } else { "Глава " }
+        let je-prilog = it.has("label") and repr(it.label).starts-with("<dodatak-")
+        let prefix = if je-prilog { "Прилог " } else { "Глава " }
         text(prefix + counter(heading).display(it.numbering), size: 22pt)
     }
     set par(justify: false)
@@ -85,9 +93,9 @@
 
 
 
-// Додаци користе словну нумерацију, одвојену од основних поглавља.
+// Прилози користе словну нумерацију, одвојену од основних поглавља.
 #counter(heading).update(0)
-#set heading(numbering: "A.1")
+#set heading(numbering: prilog-numbering)
 #include "poglavlja/dodatak-a-api.typ"
 #include "poglavlja/dodatak-b-statusi.typ"
 #include "poglavlja/dodatak-c-zahtevi.typ"
