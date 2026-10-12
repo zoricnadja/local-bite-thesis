@@ -123,8 +123,7 @@
 
 #include "biografija.typ"
 
-#show "Available at:": "Доступно на "
-#bibliography(title: [Литература], style: "ieee", "literatura.bib")
+#bibliography(title: [Литература], style: "ieee.csl", "literatura.bib")
 #checkbib()
 
 // Потребне исправке и дораде. У тексту користити са
