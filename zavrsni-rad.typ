@@ -3,9 +3,6 @@
 
 #import "metadata.typ": *
 #import "funkcije.typ": checkbib, todos
-// Празна поља комисије остају празна до потврде ментора.
-#show "Др , ": ""
-#show ", PhD, ": ""
 #set page(paper: format_strane, margin: (y: 2.5cm, inside: 2cm, outside: 1.5cm))
 #include "naslovna.typ"
 #pagebreak()
