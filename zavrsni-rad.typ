@@ -39,8 +39,9 @@
 #show heading.where(level: 1): (it) => {
     pagebreak(to: "odd", weak: true)
     set block(spacing: 8pt)
-    if heading.numbering != none {
-        text("Глава " + counter(heading).display(), size: 22pt)
+    if it.numbering != none {
+        let prefix = if it.numbering == "A.1" { "Додатак " } else { "Глава " }
+        text(prefix + counter(heading).display(it.numbering), size: 22pt)
     }
     set par(justify: false)
     line(length: 100%)
@@ -84,7 +85,15 @@
 
 
 
+// Додаци користе словну нумерацију, одвојену од основних поглавља.
+#counter(heading).update(0)
+#set heading(numbering: "A.1")
+#include "poglavlja/dodatak-a-api.typ"
+#include "poglavlja/dodatak-b-statusi.typ"
+#include "poglavlja/dodatak-c-zahtevi.typ"
+#include "poglavlja/dodatak-d-tehnologije.typ"
 #set heading(numbering: none)
+
 #show outline: set heading(outlined: true)
 #context {
     if query(figure.where(kind: image)).len() > 0  [
@@ -107,14 +116,6 @@
 }
 
 
-
-// Додаци користе словну нумерацију, одвојену од основних поглавља.
-#counter(heading).update(0)
-#set heading(numbering: "A.1")
-#include "poglavlja/dodatak-a-api.typ"
-#include "poglavlja/dodatak-b-statusi.typ"
-#include "poglavlja/dodatak-c-zahtevi.typ"
-#include "poglavlja/dodatak-d-tehnologije.typ"
 #set heading(numbering: none)
 #include "poglavlja/dodatak-1-skracenice.typ"
 
